@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../constants/assets.dart';
-import '../botnav/bottom_nav._main.dart';
 import 'components/home_category.dart';
 import 'components/home_popular.dart';
 
@@ -15,13 +12,13 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,10 +149,10 @@ class _HomeMainState extends State<HomeMain> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigation(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigation(
+      //   currentIndex: _currentIndex,
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 }
