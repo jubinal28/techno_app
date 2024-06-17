@@ -19,4 +19,10 @@ class Assets {
   static const menu = "assets/images/Menu.png";
   static const saved = "assets/images/Saved.png";
   static const user = "assets/images/User.png";
+  static const star3 = "assets/images/Star3.png";
+  static const like = "assets/images/like.png";
+  static const dislike = "assets/images/dislike.png";
+  static const pfp = "assets/images/op.png";
+
+  Assets(String techfood5);
 }
