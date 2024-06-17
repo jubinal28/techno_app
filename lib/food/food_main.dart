@@ -1,10 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:techno_app/constants/assets.dart';
 
 import 'details/food_details.dart';
 
-class FoodMain extends StatelessWidget {
+class FoodMain extends StatefulWidget {
   const FoodMain({super.key, required String title});
+
+  @override
+  State<FoodMain> createState() => _FoodMainState();
+}
+
+class _FoodMainState extends State<FoodMain> {
+  ValueNotifier<int> _quantity = ValueNotifier<int>(1);
+
+  @override
+  void dispose() {
+    _quantity.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +310,229 @@ class FoodMain extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 30.0),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0),
+                                  ),
+                                ),
+                                builder: (BuildContext context) {
+                                  return Wrap(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25.0),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Center(
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    height: 460,
+                                                    width: double.infinity,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: Color(0xFFE5E7EB),
+                                                      borderRadius:
+                                                          BorderRadius.vertical(
+                                                              top: Radius
+                                                                  .circular(
+                                                                      25.0),
+                                                              bottom: Radius
+                                                                  .circular(
+                                                                      200)),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                right: 20.0,
+                                                                left: 20),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      25.0),
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          child: Image.asset(
+                                                            Assets.techfood5,
+                                                            fit: BoxFit.fill,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Text(
+                                                        'Sour Pork',
+                                                        style: TextStyle(
+                                                          fontSize: 32,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      const Text(
+                                                        'P120.000',
+                                                        style: TextStyle(
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 20),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          right: 90.0,
+                                                          left: 90.0,
+                                                          top: 10,
+                                                          bottom: 20,
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              'Quantity',
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0xFFAD681A),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            60),
+                                                              ),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  IconButton(
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .add_circle,
+                                                                      color: Color(
+                                                                          0xFF222222),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      _quantity
+                                                                          .value++;
+                                                                    },
+                                                                  ),
+                                                                  ValueListenableBuilder<
+                                                                      int>(
+                                                                    valueListenable:
+                                                                        _quantity,
+                                                                    builder: (context,
+                                                                        value,
+                                                                        child) {
+                                                                      return Text(
+                                                                        '$value',
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: Colors.white),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .remove_circle,
+                                                                      color: Color(
+                                                                          0xFF222222),
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      if (_quantity
+                                                                              .value >
+                                                                          1) {
+                                                                        _quantity
+                                                                            .value--;
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(20.0),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color(
+                                                                0xFF212121),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        60),
+                                                          ),
+                                                          child: TextButton(
+                                                            onPressed: () {},
+                                                            child: const Text(
+                                                              'Proceed Transaction',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                             style: TextButton.styleFrom(
                               backgroundColor: const Color(0xFFAD681A),
                               padding: const EdgeInsets.symmetric(
@@ -308,9 +544,10 @@ class FoodMain extends StatelessWidget {
                             child: const Text(
                               'Order',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w900),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
                           ),
                         ),

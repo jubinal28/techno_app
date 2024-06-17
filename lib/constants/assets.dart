@@ -23,6 +23,6 @@ class Assets {
   static const like = "assets/images/like.png";
   static const dislike = "assets/images/dislike.png";
   static const pfp = "assets/images/op.png";
-
+  static const elipse = "assets/images/elipse.png";
   Assets(String techfood5);
 }
