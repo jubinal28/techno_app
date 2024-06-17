@@ -1,10 +1,11 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../constants/assets.dart';
-import '../../../widget/custom_indicator_carousel.dart';
-import 'components/home_vouchers.dart';
+import '../botnav/bottom_nav._main.dart';
+import 'components/home_category.dart';
+import 'components/home_popular.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key, required String title});
@@ -14,116 +15,146 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-  final List<String> items = [
-    Assets.splashlogo,
-    Assets.splashlogo,
-    Assets.splashlogo,
-  ];
-  int _selectedPageIndex = 0;
-  int _selectedIndicator = 0;
+  int _currentIndex = 0;
 
-  void _selectPage(int index) {
+  void _onItemTapped(int index) {
     setState(() {
-      _selectedPageIndex = index;
-    });
-  }
-
-  void _selectIndicator(int index) {
-    setState(() {
-      _selectedIndicator = index;
-    });
-  }
-
-  final PageController _pageController = PageController(initialPage: 0);
-  int _currentPage = 0;
-  bool end = false;
-  var _isVisible = true;
-  @override
-  initState() {
-    super.initState();
-    _isVisible = true;
-
-    Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-      if (_currentPage == 2) {
-        end = true;
-      } else if (_currentPage == 1) {
-        end = true;
-      } else if (_currentPage == 0) {
-        end = true;
-      }
-
-      if (end == true) {
-        _currentPage++;
-      } else {
-        _currentPage++;
-      }
-
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeIn,
-      );
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(6),
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: Stack(
-                  children: [
-                    PageView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      controller: _pageController,
-                      itemBuilder: (context, index) {
-                        return CarouselItem(
-                          imagePath: items[index % items.length],
-                        );
-                      },
-                      onPageChanged: _selectIndicator,
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      left: 0,
-                      right: 0,
-                      child: CustomIndicatorWidget(
-                        currentIndex: _selectedIndicator,
-                        length: items.length,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: Column(
+          children: [
+            AppBar(
+              automaticallyImplyLeading: false,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.search),
+                    iconSize: 40,
+                  ),
+                  Image.asset(
+                    Assets.techlogo,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.notifications_none_outlined),
+                    iconSize: 40,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              height: 2.0,
+              color: Colors.grey,
+              width: 370,
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(6),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 15),
+                  child: Container(
+                    height: 164,
+                    width: 390,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFAD681A),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
                     ),
-                  ],
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 10,
+                          left: 167,
+                          child: Image.asset(
+                            Assets.techdiscount,
+                            height: 160,
+                            width: 220,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 190,
+                                child: Text(
+                                  'Your First Order Gets',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                  ),
+                                  color: Colors.white54,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 10, left: 10),
+                                  child: Text(
+                                    '55% Off',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              //put here all the other in home
-              HomeVouchers(),
-            ],
-          ),
-        ));
-  }
-}
+              ],
+            ),
 
-class CarouselItem extends StatelessWidget {
-  final String imagePath;
-
-  const CarouselItem({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
+            //put here all the other in home
+            const HomeCategory(),
+            const SizedBox(
+              height: 15,
+            ),
+            const HomePopular(),
+          ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigation(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
